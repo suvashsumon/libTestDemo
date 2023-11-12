@@ -1,0 +1,8 @@
+
+def logarithmic_transform(input):
+    #c = 255 / np.log(1 + np.max(input))
+    c = 1
+    output = c * (np.log(input + 1))
+    output = np.array(output, dtype='uint8')
+    return output
+

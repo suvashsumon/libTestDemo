@@ -1,0 +1,23 @@
+def dilation(image, mask):
+    considered_pixel = mask.copy()
+    new_image = np.zeros(image.shape, dtype=np.uint8)
+    mask_x, mask_y = mask.shape
+    height, width = image.shape
+    for i in range(height):
+        for j in range(width):
+            flag = False
+            for l in range(mask_x):
+                for r in range(mask_y):
+                    xx = l + i - (mask_x//2)
+                    yy = r + j - (mask_y//2)
+                    if (xx<0 or xx>=height or yy<0 or yy>=width):
+                        continue
+                    if image[xx, yy] > 0:
+                        flag = True
+                        break 
+            
+            if flag:
+                new_image[i, j] = 255
+            flag = False
+    
+    return new_image

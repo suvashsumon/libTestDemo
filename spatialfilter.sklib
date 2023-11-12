@@ -1,0 +1,17 @@
+def get_average_filtered_image(input, mask_dim):
+    mask_x = mask_dim
+    mask_y = mask_dim
+
+    height, width = input.shape
+    average_image = np.zeros((height, width), dtype=np.uint8)
+    temp_image_segment = np.zeros((mask_x, mask_y), dtype=np.uint8)
+
+    for i in range(0, height):
+        for j in range(0, width):
+            for l in range(0, mask_y):
+                for r in range(0, mask_x):
+                    temp_image_segment[l, r] = input[(i-(mask_x//2)+l)%height, (j-(mask_y//2)+r)%width]
+
+            average_image[i, j] = np.mean(temp_image_segment) # change according to mean, median etc
+
+    return average_image

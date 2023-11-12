@@ -1,0 +1,20 @@
+def batterworth_low_pass_filter(image, order, cut_off_frequency):
+    height, width = image.shape
+    my_filter  = np.zeros(image.shape, dtype=np.float32)
+
+    frequncy_domain_image = np.fft.fft2(image)
+    frequncy_domain_image = np.fft.fftshift(frequncy_domain_image)
+    n = order
+    d0 = cut_off_frequency
+
+
+    for i in range(height):
+        for j in range(width):
+            d = np.sqrt((i-height/2)**2 + (j-width/2)**2)
+            my_filter[i, j] = 1/(1+(d/d0)**(2*n))
+    
+    filteredImage = frequncy_domain_image * my_filter
+    filteredImage = np.fft.fftshift(filteredImage)
+    filteredImage = np.abs(np.fft.ifft2(filteredImage))
+    
+    return filteredImage

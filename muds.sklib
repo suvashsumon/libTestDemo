@@ -1,0 +1,23 @@
+def make_up_down_sampling(image, sampling_factor=2, type=0):
+    # type=0 -> downsampling
+    # type=1 -> upsampling
+    if type == 0:
+        new_height = int(image.shape[0] // sampling_factor)
+        new_width = int(image.shape[1] // sampling_factor)
+    else:
+        new_height = int(image.shape[0] * sampling_factor)
+        new_width = int(image.shape[1] * sampling_factor)
+
+    sampled_image = np.empty((new_height, new_width), dtype=image.dtype)
+    for y in range(new_height):
+        for x in range(new_width):
+            if type == 0:
+                original_x = int(x * sampling_factor)
+                original_y = int(y * sampling_factor)
+            else:
+                original_x = int(x // sampling_factor)
+                original_y = int(y // sampling_factor)
+
+            sampled_image[y, x] = image[original_y, original_x]
+
+    return sampled_image

@@ -1,0 +1,7 @@
+def calculate_psnr(original_img, processed_img):
+    original_img = original_img.astype(np.float64)
+    processed_img = processed_img.astype(np.float64)
+    max_pixel_value = 255
+    mse = np.mean((original_img - processed_img) ** 2)
+    psnr = 10 * np.log10((max_pixel_value ** 2) / mse)
+    return psnr

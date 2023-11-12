@@ -1,0 +1,32 @@
+def erosion(image, mask):
+    considered_pixel = mask.copy()
+    new_image = image.copy()
+    mask_x, mask_y = mask.shape
+    height, width = image.shape
+
+    for i in range(height):
+        for j in range(width):
+            flag = True
+            for l in range(mask_y):
+                for r in range(mask_x):
+                    if mask[l, r] == 0:
+                        continue
+
+                    xx = l + i - (mask_x//2)
+                    yy = r + j - (mask_y//2)
+                    considered_pixel[l, r] = 0
+
+                    if (xx>=0 and xx<height and yy>=0 and yy<width):
+                        considered_pixel[l, r] = image[xx, yy]
+                    
+                    if considered_pixel[l, r] == 0:
+                        flag = False
+                        break
+                
+                if flag == True:
+                    new_image[i, j] = 255
+                else:
+                    new_image[i, j] = 0
+
+    return new_image.astype(np.uint8)
+                    

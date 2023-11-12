@@ -1,0 +1,19 @@
+def get_geometric_mean_image(image, dimension):
+    mask_x = dimension
+    mask_y = dimension
+
+    height, width = image.shape
+    gmean_image = np.zeros((height, width), dtype=np.uint8)
+    temp_image_segment = np.zeros((mask_x, mask_y), dtype=np.float32)
+
+    for i in range(0, height):
+        for j in range(0, width):
+            for l in range(0, mask_x):
+                for r in range(0, mask_y):
+                    temp_image_segment[l, r] = image[(i-(mask_x//2)+l)%height, (j-(mask_y//2)+r)%width]
+                    if temp_image_segment[l, r]==0:
+                        temp_image_segment[l, r] = 0
+
+            gmean_image[i, j] = np.prod(temp_image_segment)**(1/(mask_x*mask_y))
+    
+    return gmean_image

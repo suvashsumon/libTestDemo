@@ -1,0 +1,20 @@
+def gaussian_high_pass_filter(image , cutt_off_frequecny):
+    height, width = image.shape
+    my_filter  = np.zeros(image.shape, dtype=np.float32)
+
+    frequncy_domain_image = np.fft.fft2(image)
+    frequncy_domain_image = np.fft.fftshift(frequncy_domain_image)
+    d0 = cutt_off_frequecny
+
+
+    for i in range(height):
+        for j in range(width):
+            d = np.sqrt((i-height/2)**2 + (j-width/2)**2)
+            my_filter[i, j] = 1 - np.exp(-d**2/(2*d0**2))
+    
+    filtered_image = frequncy_domain_image * my_filter
+
+    filtered_image = np.fft.fftshift(filtered_image)
+    filtered_image = np.abs(np.fft.ifft2(filtered_image))
+    
+    return filtered_image

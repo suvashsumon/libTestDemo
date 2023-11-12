@@ -1,0 +1,18 @@
+def getHistrogram(image):
+    # process image intensity
+    max_intensity = np.max(image)
+    min_intensity = np.min(image)
+    if min_intensity>=0 and max_intensity<=1:
+        image = image*255
+    rounded_image = np.round(image)
+    integer_image = rounded_image.astype(np.uint8)
+    
+    # make histrogram
+    histrogram = np.zeros(256, dtype='uint8')
+    height, width = integer_image.shape
+    
+    for x in range(height):
+        for y in range(width):
+            histrogram[integer_image[x, y]] += 1
+
+    return histrogram, np.arange(256)

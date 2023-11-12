@@ -1,0 +1,6 @@
+def antilog_transformation(input):
+    #c = 255 / np.log(1 + 255)
+    c = 1
+    output = np.exp(input)**(1/c)-1
+    #output = np.array(output, dtype=np.uint8)
+    return output

@@ -1,0 +1,20 @@
+def gaussion_low_pass_filter(image, cutoff):
+    height, width = image.shape
+    my_filter = np.zeros(image.shape, dtype=np.float32)
+
+    frequency_domain_image = np.fft.fft2(image)
+    frequency_domain_image = np.fft.fftshift(frequency_domain_image)
+
+    d0 = cutoff
+
+    for i in range(height):
+        for j in range(width):
+            d = np.sqrt((i-height/2)**2 + (j-width/2)**2)
+            my_filter[i, j] = np.exp(-(d**2)/(2*d0**2))
+
+    filteredImage = frequency_domain_image * my_filter
+    
+    filteredImage = np.fft.fftshift(filteredImage)
+    filteredImage = np.abs(np.fft.ifft2(filteredImage))
+
+    return filteredImage

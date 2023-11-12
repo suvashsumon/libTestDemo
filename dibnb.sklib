@@ -1,0 +1,6 @@
+def decrease_intensiy_resolution(input_image, bits, max_intensity):
+    desired_level = 2**bits
+    normalized_image = input_image/max_intensity
+    output_image = np.uint8(np.floor(normalized_image*desired_level))
+
+    return output_image

@@ -1,0 +1,4 @@
+def power_law_transformation(input, gamma):
+    output = input**gamma
+    #output = np.array(output, dtype = np.uint8)
+    return output
